@@ -15,3 +15,81 @@ import Foundation
 protocol ILoggerDestinationsProvider {
     func getDestinations() -> [LoggerBaseDestination]?
 }
+
+extension ILoggerDestinationsProvider {
+    
+    /**
+     Parses an array of configuration objects into an array of destination objects
+     
+     - parameters:
+        - destinationsConfiguration: The configuration object of the destinations' configuration
+     
+     - returns:
+     An array of configured `LoggerBaseDestination` objects
+     */
+    func parseDestinations(destinationsConfiguration: JSONDestinationsConfiguration) -> [LoggerBaseDestination]? {
+        var destinations: [LoggerBaseDestination] = []
+        for dest in destinationsConfiguration.destinations {
+            // get the adapter
+            let adapter: ILoggerLibraryAdapter
+            switch dest.engine {
+            case ConfigurationValues.Library.XCGLogger:
+                adapter = XCGLoggerAdapter()
+            case ConfigurationValues.Library.SwiftyBeaver:
+                adapter = SwiftyBeaverAdapter()
+            default:
+                return nil
+            }
+            
+            // create a destination based on type
+            let newDest: LoggerBaseDestination
+            switch dest.type {
+            case ConfigurationValues.DestinationType.console:
+                newDest = LoggerConsoleDestination(adapter: adapter, minimumLevel: dest.minimumLevel, contexts: dest.contexts)
+            case ConfigurationValues.DestinationType.file:
+                newDest = LoggerFileDestination(adapter: adapter, minimumLevel: dest.minimumLevel, contexts: dest.contexts, fileName: dest.fileName!)
+            default:
+                return nil
+            }
+            
+            // configure the formatting
+            newDest.showDate = dest.showDate ?? true
+            newDest.showFileName = dest.showFileName ?? true
+            newDest.showFunctionName = dest.showFunctionName ?? true
+            newDest.showLineNumber = dest.showLineNumber ?? true
+            newDest.showLevel = dest.showLevel ?? true
+            
+            destinations.append(newDest)
+        }
+        
+        return destinations
+    }
+}
+
+struct ConfigurationValues {
+    struct DestinationType {
+        static let console = "console"
+        static let file = "file"
+    }
+    struct Library {
+        static let XCGLogger = "XCGLogger"
+        static let SwiftyBeaver = "SwiftyBeaver"
+    }
+}
+
+struct JSONDestinationsConfiguration : Codable {
+    var destinations: [JSONDestinationConfiguration]
+}
+
+struct JSONDestinationConfiguration : Codable {
+    var engine: String
+    var type: String
+    var minimumLevel: LoggerLevel
+    var contexts: [String : Bool]?
+    var showLevel: Bool?
+    var showDate: Bool?
+    var showFileName: Bool?
+    var showFunctionName: Bool?
+    var showLineNumber: Bool?
+    var fileName: String?
+}

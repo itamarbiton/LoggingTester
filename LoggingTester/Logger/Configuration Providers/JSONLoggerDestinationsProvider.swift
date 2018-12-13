@@ -50,40 +50,30 @@ class JSONLoggerDestinationsProvider : ILoggerDestinationsProvider {
             }
             
            // create a destination based on type
+            let newDest: LoggerBaseDestination
             switch dest.type {
             case ConfigurationValues.DestinationType.console:
-                destinations.append(LoggerConsoleDestination(adapter: adapter, minimumLevel: dest.minimumLevel, contexts: dest.contexts))
+                newDest = LoggerConsoleDestination(adapter: adapter, minimumLevel: dest.minimumLevel, contexts: dest.contexts)
             case ConfigurationValues.DestinationType.file:
-                destinations.append(LoggerFileDestination(adapter: adapter, minimumLevel: dest.minimumLevel, contexts: dest.contexts, fileName: dest.fileName!))
-                
+                newDest = LoggerFileDestination(adapter: adapter, minimumLevel: dest.minimumLevel, contexts: dest.contexts, fileName: dest.fileName!)
             default:
                 return nil
             }
+            
+            // configure the formatting
+            newDest.showDate = dest.showDate ?? true
+            newDest.showFileName = dest.showFileName ?? true
+            newDest.showFunctionName = dest.showFunctionName ?? true
+            newDest.showLineNumber = dest.showLineNumber ?? true
+            newDest.showLevel = dest.showLevel ?? true
+            
+            destinations.append(newDest)
         }
         
-        return nil
+        return destinations
     }
     
-    struct ConfigurationValues {
-        struct DestinationType {
-            static let console = "console"
-            static let file = "file"
-        }
-        struct Library {
-            static let XCGLogger = "XCGLogger"
-            static let SwiftyBeaver = "SwiftyBeaver"
-        }
-    }
     
-    struct JSONDestinationsConfiguration : Codable {
-        var destinations: [JSONDestinationConfiguration]
-    }
     
-    struct JSONDestinationConfiguration : Codable {
-        var engine: String
-        var type: String
-        var minimumLevel: LoggerLevel
-        var contexts: [String : Bool]?
-        var fileName: String?
-    }
+    
 }

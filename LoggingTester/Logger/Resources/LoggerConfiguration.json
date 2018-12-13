@@ -1,7 +1,7 @@
 {
 	"destinations": [
 		{
-			"engine": "XCGLogger",
+			"engine": "SwiftyBeaver",
 			"type": "console",
 			"minimumLevel": 1,
 			"contexts": {
@@ -10,7 +10,7 @@
             }
 		},
 		{
-			"engine": "XCGLogger",
+			"engine": "SwiftyBeaver",
 			"type": "file",
 			"minimumLevel": 1,
 			"fileName": "logger_1.log"

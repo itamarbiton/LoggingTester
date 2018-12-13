@@ -45,6 +45,21 @@ class PlistLoggerDestinationsProvider : ILoggerDestinationsProvider {
         self.fileName = fileName
     }
     
+    func getDestinations() -> [LoggerBaseDestination]? {
+        // create a decode
+        let decoder = PropertyListDecoder()
+        
+        guard
+            let path = Bundle.main.url(forResource: fileName, withExtension: "plist"),
+            let plistData = try? Data(contentsOf: path),
+            let destArr = try? decoder.decode(JSONDestinationsConfiguration.self, from: plistData)
+        else {
+            return nil
+        }
+        
+        return parseDestinations(destinationsConfiguration: destArr)
+    }
+    
     /**
      Read the configuration from a .plist file named LoggerConfiguration.plist and returns an array of
      configured logging destinations
@@ -52,7 +67,7 @@ class PlistLoggerDestinationsProvider : ILoggerDestinationsProvider {
      - returns:
      An array of `LoggerBaseDestination` objects configured according to the configuration file
      */
-    func getDestinations() -> [LoggerBaseDestination]? {
+    func oldGetDestinations() -> [LoggerBaseDestination]? {
         guard
             let path = Bundle.main.url(forResource: "LoggerConfiguration", withExtension: "plist"),
             let configDict = NSDictionary(contentsOf: path) as? [String : Any]
