@@ -23,6 +23,15 @@ class LoggerBaseDestination {
     /** The minimum level messages should be to get logged to the destination */
     let minimumLevel: LoggerLevel
     
+    /** A date formatter used to display the time & date the message was logged */
+    let dateFormatter: DateFormatter
+    
+    var showFunctionName = true
+    var showFileName = true
+    var showLevel = true
+    var showLineNumber = true
+    var showDate = true
+    
     /**
      Initializes a new base logger destination
      
@@ -36,6 +45,11 @@ class LoggerBaseDestination {
         self.contexts = contexts
         self.libraryAdapter = adapter
         
+        // configure the date formatter
+        dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        
         // add the destination to the engine
         libraryAdapter.addDestination(destination: self)
     }
@@ -43,8 +57,9 @@ class LoggerBaseDestination {
     /**
      Logs a certain message to the destination
      */
-    func log(message: String, level: LoggerLevel, context: LoggerContext?) {
-        libraryAdapter.log(message: message, level: level, context: context)
+    func log(message: String, level: LoggerLevel, context: LoggerContext?, fileName: String, functionName: String, lineNumber: Int) {
+        let processedMessage = process(message: message, level: level, fileName: fileName, functionName: functionName, lineNumber: lineNumber)
+        libraryAdapter.log(message: processedMessage, level: level, context: context)
     }
     
     /**
@@ -62,6 +77,7 @@ class LoggerBaseDestination {
         return (shouldLog(level: level) || shouldLog(withContext: context))
     }
     
+    
     /**
      Checks whether a ceratin level is high enough to get logged to this destiantion
      
@@ -73,6 +89,35 @@ class LoggerBaseDestination {
      */
     private func shouldLog(level: LoggerLevel) -> Bool {
         return (level >= self.minimumLevel)
+    }
+    
+    /**
+     Processes the mesasge and formats it according to the configuration of the location
+     
+     - parameters:
+         - message: The log's message
+         - level: The log's message level of importance
+         - fileName: The name of the file the log came from
+         - functionName: The name of the function the log came from
+         - lineNumber: The number of the line the log was invoked from
+     */
+    private func process(message: String, level: LoggerLevel, fileName: String, functionName: String, lineNumber: Int) -> String {
+        var processedMessage: String = ""
+        
+        if (showDate) {
+            processedMessage += "[\(dateFormatter.string(from: Date()))]"
+        }
+        
+        if (showFileName) {
+            let pathHead = (fileName as NSString).lastPathComponent
+            if (showLineNumber) { processedMessage += "[\(pathHead):\(lineNumber)]" } else { processedMessage += "[\(fileName)]" }
+        }
+        
+        if (showLevel) {
+            processedMessage += "[\(level)]"
+        }
+        
+        return (processedMessage + "> \(message)")
     }
     
     /**

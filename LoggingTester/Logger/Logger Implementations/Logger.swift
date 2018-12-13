@@ -24,10 +24,10 @@ class Logger: ILogger {
         self.destinations = destinations
     }
     
-    func log(message: String, level: LoggerLevel, context: LoggerContext?) {
+    func log(message: String, level: LoggerLevel, context: LoggerContext?, fileName: String = #file, functionName: String = #function, lineNumber: Int = #line) {
         for destination in destinations {
              if (destination.shouldLog(withLevel: level, context: context)) {
-                destination.log(message: message, level: level, context: context)
+                destination.log(message: message, level: level, context: context, fileName: fileName, functionName: functionName, lineNumber: lineNumber)
             }
         }
     }

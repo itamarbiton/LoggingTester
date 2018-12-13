@@ -22,3 +22,20 @@ enum LoggerLevel: Int, Comparable, Codable {
         return lhs.rawValue < rhs.rawValue
     }
 }
+
+extension LoggerLevel: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .verbose:
+            return "💜 VERBOSE"
+        case .debug:
+            return "💚 DEBUG"
+        case .info:
+            return "💙 INFO"
+        case .warning:
+            return "💛 WARNING"
+        case .error:
+            return "❤️ ERROR"
+        }
+    }
+}

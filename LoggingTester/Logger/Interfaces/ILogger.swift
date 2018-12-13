@@ -19,55 +19,79 @@ protocol ILogger {
         - message: The actual message that should be logged
         - level: The logged message's level of importance
         - context: The context in which the message was logged, used to supply additional important information
+        - fileName: The name of the file that the log came from
+        - functionName: The name of the function that the log came from
+        - lineNumber: The line number the log was invoked from
      */
-    func log(message: String, level: LoggerLevel, context: LoggerContext?)
+    func log(message: String, level: LoggerLevel, context: LoggerContext?, fileName: String, functionName: String,  lineNumber: Int)
 }
 
 extension ILogger {
+    
     /**
      Logs a 'verbose' level message.
      
-     - parameters:
-     - message: The message that should be logged.
-     - context: The context in which the message was logged.
+     - parameter:
+        - message: The actual message that should be logged
+        - level: The logged message's level of importance
+        - context: The context in which the message was logged, used to supply additional important information
+        - fileName: The name of the file that the log came from
+        - functionName: The name of the function that the log came from
+        - lineNumber: The line number the log was invoked from
      */
-    func verbose(message: String, context: LoggerContext? = nil) { log(message: message, level: .verbose, context: context) }
+    func verbose(message: String, context: LoggerContext? = nil, fileName: String = #file, functionName: String = #function, lineNumber: Int = #line) { log(message: message, level: .verbose, context: context, fileName: fileName, functionName: functionName, lineNumber: lineNumber) }
     
     /**
      Logs a 'debug' level message.
      
-     - parameters:
-     - message: The message that should be logged.
-     - context: The context in which the message was logged.
+     - parameter:
+        - message: The actual message that should be logged
+        - level: The logged message's level of importance
+        - context: The context in which the message was logged, used to supply additional important information
+        - fileName: The name of the file that the log came from
+        - functionName: The name of the function that the log came from
+        - lineNumber: The line number the log was invoked from
      */
-    func debug(message: String, context: LoggerContext? = nil) { log(message: message, level: .debug, context: context) }
+    func debug(message: String, context: LoggerContext? = nil, fileName: String = #file, functionName: String = #function, lineNumber: Int = #line) { log(message: message, level: .debug, context: context, fileName: fileName, functionName: functionName, lineNumber: lineNumber) }
     
     /**
      Logs a 'info' level message.
      
-     - parameters:
-     - message: The message that should be logged.
-     - context: The context in which the message was logged.
+     - parameter:
+        - message: The actual message that should be logged
+        - level: The logged message's level of importance
+        - context: The context in which the message was logged, used to supply additional important information
+        - fileName: The name of the file that the log came from
+        - functionName: The name of the function that the log came from
+        - lineNumber: The line number the log was invoked from
      */
-    func info(message: String, context: LoggerContext? = nil) { log(message: message, level: .info, context: context) }
+    func info(message: String, context: LoggerContext? = nil, fileName: String = #file, functionName: String = #function, lineNumber: Int = #line) { log(message: message, level: .info, context: context, fileName: fileName, functionName: functionName, lineNumber: lineNumber) }
     
     /**
      Logs a 'warning' level message.
      
-     - parameters:
-     - message: The message that should be logged.
-     - context: The context in which the message was logged.
+     - parameter:
+        - message: The actual message that should be logged
+        - level: The logged message's level of importance
+        - context: The context in which the message was logged, used to supply additional important information
+        - fileName: The name of the file that the log came from
+        - functionName: The name of the function that the log came from
+        - lineNumber: The line number the log was invoked from
      */
-    func warning(message: String, context: LoggerContext? = nil) { log(message: message, level: .warning, context: context) }
+    func warning(message: String, context: LoggerContext? = nil, fileName: String = #file, functionName: String = #function, lineNumber: Int = #line) { log(message: message, level: .warning, context: context, fileName: fileName, functionName: functionName, lineNumber: lineNumber) }
     
     /**
      Logs a 'error' level message.
      
-     - parameters:
-     - message: The message that should be logged.
-     - context: The context in which the message was logged.
+     - parameter:
+        - message: The actual message that should be logged
+        - level: The logged message's level of importance
+        - context: The context in which the message was logged, used to supply additional important information
+        - fileName: The name of the file that the log came from
+        - functionName: The name of the function that the log came from
+        - lineNumber: The line number the log was invoked from
      */
-    func error(message: String, context: LoggerContext? = nil) { log(message: message, level: .error, context: context) }
+    func error(message: String, context: LoggerContext? = nil, fileName: String = #file, functionName: String = #function, lineNumber: Int = #line) { log(message: message, level: .error, context: context, fileName: fileName, functionName: functionName, lineNumber: lineNumber) }
     
 }
 
