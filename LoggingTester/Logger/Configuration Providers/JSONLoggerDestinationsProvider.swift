@@ -36,44 +36,6 @@ class JSONLoggerDestinationsProvider : ILoggerDestinationsProvider {
                 return nil
         }
         
-        var destinations: [LoggerBaseDestination] = []
-        for dest in destArr.destinations {
-            // get the adapter
-            let adapter: ILoggerLibraryAdapter
-            switch dest.engine {
-            case ConfigurationValues.Library.XCGLogger:
-                adapter = XCGLoggerAdapter()
-            case ConfigurationValues.Library.SwiftyBeaver:
-                adapter = SwiftyBeaverAdapter()
-            default:
-                return nil
-            }
-            
-           // create a destination based on type
-            let newDest: LoggerBaseDestination
-            switch dest.type {
-            case ConfigurationValues.DestinationType.console:
-                newDest = LoggerConsoleDestination(adapter: adapter, minimumLevel: dest.minimumLevel, contexts: dest.contexts)
-            case ConfigurationValues.DestinationType.file:
-                newDest = LoggerFileDestination(adapter: adapter, minimumLevel: dest.minimumLevel, contexts: dest.contexts, fileName: dest.fileName!)
-            default:
-                return nil
-            }
-            
-            // configure the formatting
-            newDest.showDate = dest.showDate ?? true
-            newDest.showFileName = dest.showFileName ?? true
-            newDest.showFunctionName = dest.showFunctionName ?? true
-            newDest.showLineNumber = dest.showLineNumber ?? true
-            newDest.showLevel = dest.showLevel ?? true
-            
-            destinations.append(newDest)
-        }
-        
-        return destinations
+        return parseDestinations(destinationsConfiguration: destArr)
     }
-    
-    
-    
-    
 }

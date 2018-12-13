@@ -49,6 +49,7 @@ class PlistLoggerDestinationsProvider : ILoggerDestinationsProvider {
         // create a decode
         let decoder = PropertyListDecoder()
         
+        // get the configuration
         guard
             let path = Bundle.main.url(forResource: fileName, withExtension: "plist"),
             let plistData = try? Data(contentsOf: path),
