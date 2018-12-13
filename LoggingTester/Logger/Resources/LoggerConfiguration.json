@@ -1,0 +1,19 @@
+{
+	"destinations": [
+		{
+			"engine": "XCGLogger",
+			"type": "console",
+			"minimumLevel": 1,
+			"contexts": {
+                "ui": true,
+                "network": true
+            }
+		},
+		{
+			"engine": "XCGLogger",
+			"type": "file",
+			"minimumLevel": 1,
+			"fileName": "logger_1.log"
+		}
+	]
+}

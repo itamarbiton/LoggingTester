@@ -120,33 +120,32 @@ class PlistLoggerDestinationsProvider : ILoggerDestinationsProvider {
             throw PlistConfigurationProviderError.invalidConfigurationFile
         }
         
+        // set the engine
+        let adapter: ILoggerLibraryAdapter
         switch engineString {
         case "XCGLogger":
-            // create the engine
-            let adapter = XCGLoggerAdapter()
-            
-            // act based on type
-            switch destTypeString {
-            case ConfigurationKeys.Destination.DestinationType.console:
-                return LoggerConsoleDestination(adapter: adapter, minimumLevel: selectedMinLevel, contexts: contexts)
-                
-            case ConfigurationKeys.Destination.DestinationType.file:
-                guard let fileName = dict[ConfigurationKeys.Destination.fileName] as? String else {
-                    throw PlistConfigurationProviderError.invalidConfigurationFile
-                }
-                return LoggerFileDestination(adapter: adapter,
-                                             minimumLevel: selectedMinLevel,
-                                             contexts: contexts, fileName: fileName)
-                
-            default:
-                throw PlistConfigurationProviderError.invalidConfigurationFile
-            }
-            
+            adapter = XCGLoggerAdapter()
+        case "SwiftyBeaver":
+            adapter = SwiftyBeaverAdapter()
         default:
             throw PlistConfigurationProviderError.invalidConfigurationFile
         }
         
-        
+        // act based on type
+        switch destTypeString {
+        case ConfigurationKeys.Destination.DestinationType.console:
+            return LoggerConsoleDestination(adapter: adapter, minimumLevel: selectedMinLevel, contexts: contexts)
+            
+        case ConfigurationKeys.Destination.DestinationType.file:
+            guard let fileName = dict[ConfigurationKeys.Destination.fileName] as? String else {
+                throw PlistConfigurationProviderError.invalidConfigurationFile
+            }
+            return LoggerFileDestination(adapter: adapter,
+                                         minimumLevel: selectedMinLevel,
+                                         contexts: contexts, fileName: fileName)
+        default:
+            throw PlistConfigurationProviderError.invalidConfigurationFile
+        }
     }
     
     /**

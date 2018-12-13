@@ -10,6 +10,6 @@ import Foundation
 
 class LoggerFactory {
     static var get: ILogger =
-        Logger(destinations: (PlistLoggerDestinationsProvider().getDestinations())
+        Logger(destinations: (JSONLoggerDestinationsProvider().getDestinations())
             ?? DefaultLoggerDestinationsProvider().getDestinations()!)
 }

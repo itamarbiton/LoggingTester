@@ -11,7 +11,7 @@ import Foundation
 /**
  An enumeration type used to set the level type of a certain logged message.
  */
-enum LoggerLevel: Int, Comparable {
+enum LoggerLevel: Int, Comparable, Codable {
     case verbose
     case debug
     case info

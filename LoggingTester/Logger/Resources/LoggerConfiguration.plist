@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>engine</key>
-			<string>XCGLogger</string>
+			<string>SwiftyBeaver</string>
 			<key>type</key>
 			<string>console</string>
 			<key>minimumLevel</key>
@@ -23,7 +23,7 @@
 		</dict>
 		<dict>
 			<key>engine</key>
-			<string>XCGLogger</string>
+			<string>SwiftyBeaver</string>
 			<key>type</key>
 			<string>file</string>
 			<key>filename</key>
