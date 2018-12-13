@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>destinations</key>
+	<array>
+		<dict>
+			<key>engine</key>
+			<string>XCGLogger</string>
+			<key>type</key>
+			<string>console</string>
+			<key>minimumLevel</key>
+			<integer>1</integer>
+			<key>contexts</key>
+			<dict>
+				<key>ui</key>
+				<true/>
+				<key>sample</key>
+				<true/>
+				<key>network</key>
+				<true/>
+			</dict>
+		</dict>
+		<dict>
+			<key>engine</key>
+			<string>XCGLogger</string>
+			<key>type</key>
+			<string>file</string>
+			<key>filename</key>
+			<string>logger_1.log</string>
+			<key>minimumLevel</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+</dict>
+</plist>

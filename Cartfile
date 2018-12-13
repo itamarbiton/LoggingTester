@@ -1,0 +1,2 @@
+github "SwiftyBeaver/SwiftyBeaver"
+github "DaveWoodCom/XCGLogger" ~> 6.1.0

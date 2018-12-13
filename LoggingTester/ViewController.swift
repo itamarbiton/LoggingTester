@@ -7,14 +7,22 @@
 //
 
 import UIKit
+import SwiftyBeaver
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        // get a logger
+        let logger = LoggerFactory.get
+        logger.verbose(message: "should only be logged to 1", context: LoggerContext.SampleContext(parameter1: 1, parameter2: "test", parameter3: true))
     }
-
-
 }
+
+
+
+
+
+
 

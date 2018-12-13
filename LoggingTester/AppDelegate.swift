@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import SwiftyBeaver
+import XCGLogger
+
+// create a global constant for the log object
+let xlog = XCGLogger.default
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +20,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // customize the SwiftyBeaver logger
+        let log = SwiftyBeaver.self
+        
+        // add a console detination to the logger
+        let console = ConsoleDestination()
+        log.addDestination(console)
+        
+        // add a file destination to the logger
+        let file = FileDestination()
+        log.addDestination(file)
+        
+        // configure the xcglogger component
+        xlog.setup(level: .warning,
+                   showLogIdentifier: true,
+                   showFunctionName: true,
+                   showThreadName: true,
+                   showLevel: true,
+                   showFileNames: true,
+                   showLineNumbers: true,
+                   showDate: true)
+        
         return true
     }
 
