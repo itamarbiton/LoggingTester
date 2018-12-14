@@ -31,7 +31,7 @@ class JSONLoggerDestinationsProvider : ILoggerDestinationsProvider {
         guard
             let url = Bundle.main.url(forResource: fileName, withExtension: "json"),
             let jsonData = try? Data(contentsOf: url),
-            let destArr = try? decoder.decode(JSONDestinationsConfiguration.self, from: jsonData)
+            let destArr = try? decoder.decode(LocalDestinationsConfiguration.self, from: jsonData)
         else {
                 return nil
         }

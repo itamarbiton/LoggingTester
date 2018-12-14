@@ -27,7 +27,7 @@ extension ILoggerDestinationsProvider {
      - returns:
      An array of configured `LoggerBaseDestination` objects
      */
-    func parseDestinations(destinationsConfiguration: JSONDestinationsConfiguration) -> [LoggerBaseDestination]? {
+    func parseDestinations(destinationsConfiguration: LocalDestinationsConfiguration) -> [LoggerBaseDestination]? {
         var destinations: [LoggerBaseDestination] = []
         for dest in destinationsConfiguration.destinations {
             // get the adapter
@@ -77,11 +77,11 @@ struct ConfigurationValues {
     }
 }
 
-struct JSONDestinationsConfiguration : Codable {
-    var destinations: [JSONDestinationConfiguration]
+struct LocalDestinationsConfiguration : Codable {
+    var destinations: [LocalDestinationConfiguration]
 }
 
-struct JSONDestinationConfiguration : Codable {
+struct LocalDestinationConfiguration : Codable {
     var engine: String
     var type: String
     var minimumLevel: LoggerLevel

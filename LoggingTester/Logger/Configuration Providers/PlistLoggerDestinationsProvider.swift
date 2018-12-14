@@ -53,7 +53,7 @@ class PlistLoggerDestinationsProvider : ILoggerDestinationsProvider {
         guard
             let path = Bundle.main.url(forResource: fileName, withExtension: "plist"),
             let plistData = try? Data(contentsOf: path),
-            let destArr = try? decoder.decode(JSONDestinationsConfiguration.self, from: plistData)
+            let destArr = try? decoder.decode(LocalDestinationsConfiguration.self, from: plistData)
         else {
             return nil
         }

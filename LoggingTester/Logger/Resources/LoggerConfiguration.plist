@@ -6,11 +6,13 @@
 	<array>
 		<dict>
 			<key>engine</key>
-			<string>SwiftyBeaver</string>
+			<string>XCGLogger</string>
 			<key>type</key>
 			<string>console</string>
 			<key>minimumLevel</key>
 			<integer>1</integer>
+			<key>showFileName</key>
+			<false/>
 			<key>contexts</key>
 			<dict>
 				<key>ui</key>
@@ -23,10 +25,10 @@
 		</dict>
 		<dict>
 			<key>engine</key>
-			<string>SwiftyBeaver</string>
+			<string>XCGLogger</string>
 			<key>type</key>
 			<string>file</string>
-			<key>filename</key>
+			<key>fileName</key>
 			<string>logger_1.log</string>
 			<key>minimumLevel</key>
 			<integer>0</integer>

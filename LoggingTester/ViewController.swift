@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         
         // get a logger
         let logger = LoggerFactory.get
-        logger.verbose(message: "should only be logged to 1", context: LoggerContext.SampleContext(parameter1: 1, parameter2: "test", parameter3: true))
+        logger.debug(message: "should only be logged to 1", context: LoggerContext.SampleContext(parameter1: 1, parameter2: "test", parameter3: true))
     }
 }
 

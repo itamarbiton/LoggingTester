@@ -46,7 +46,7 @@ extension XCGLoggerAdapter : ILoggerLibraryAdapter {
         if let destination = destination as? LoggerFileDestination {
             // create & configure the file destination
             let fileUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appendingPathComponent(destination.fileName).path
-            let fileDestination = FileDestination(writeToFile: fileUrl, identifier: "fileDestination")
+            let fileDestination = FileDestination(writeToFile: fileUrl, identifier: "fileDestination", shouldAppend: true)
             fileDestination.outputLevel = .verbose
             fileDestination.showLevel = false
             fileDestination.showFileName = false
